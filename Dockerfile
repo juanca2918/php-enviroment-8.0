@@ -17,13 +17,12 @@ RUN apt-get update && apt-get install -y apache2 software-properties-common && \
     php8.0-xml php8.0-xmlrpc php8.0-zip && apt-get update && apt-get install -y curl && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     apt-get update && apt-get install -y git && \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs && \
-    apt-get install -y npm && npm install -g yarn
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 RUN apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && \
     echo 'root:root' | chpasswd && \
     useradd -m -d /home/dev -s /bin/bash dev && \
-    echo 'dev:seypre2023' | chpasswd && \
+    sudo echo 'devjuancarlos:seypre2023' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "export VISIBLE=now" >> /etc/profile
@@ -53,7 +52,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && echo "<VirtualHo
 # Habilitamos mod_rewrite
 RUN a2enmod rewrite
 
-# Exponemos el puerto 80
+# Exponemos los puertos
 EXPOSE 80
 
 # Iniciamos apache2
