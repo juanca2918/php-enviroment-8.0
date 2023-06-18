@@ -20,37 +20,21 @@ RUN apt-get update && apt-get install -y apache2 software-properties-common && \
     curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 RUN apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && \
-    echo 'root:root' | chpasswd && \
-    useradd -m -d /home/dev -s /bin/bash dev && \
-    sudo echo 'devjuancarlos:seypre2023' | chpasswd && \
+    echo 'devjackal:juan1035' | chpasswd && \
+    useradd -m -d /home/dev -s /bin/bash devjackal && \
+    sudo echo 'devjackal:juan1035' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "export VISIBLE=now" >> /etc/profile
 
-# Descargamos el proyecto de github
-RUN git clone https://github.com/DementesWeb/sccseypre.git
-
-# Instalamos las dependencias del proyecto
-RUN cd sccseypre && composer install && npm install
-
-# Copiamos el archivo .env.example a .env
-RUN cd sccseypre && cp .env.example .env
-
-# Generamos la key
-RUN cd sccseypre && php artisan key:generate
-
-# Modificamos el archivo .env para que apunte a la base de datos de postgresql
-RUN cd sccseypre && sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=pgsql/' .env && sed -i 's/DB_HOST=127.0.0.1/DB_HOST=postgres/' .env && sed -i 's/DB_PORT=3306/DB_PORT=5432/' .env && sed -i 's/DB_DATABASE=laravel/DB_DATABASE=seypre/' .env 
-
-# En el archivo .env modificamos el cache_driver a redis
-RUN cd sccseypre && sed -i 's/CACHE_DRIVER=file/CACHE_DRIVER=redis/' .env && sed -i 's/SESSION_DRIVER=file/SESSION_DRIVER=redis/' .env && sed -i 's/QUEUE_DRIVER=sync/QUEUE_DRIVER=redis/' .env
-
 # Configuramos apache2 para que apunte a la carpeta public del proyecto
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && echo "<VirtualHost *:80>" >> /etc/apache2/sites-available/000-default.conf && echo "DocumentRoot /var/www/sccseypre/public" >> /etc/apache2/sites-available/000-default.conf && echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
-
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && echo "<VirtualHost *:80>" >> /etc/apache2/sites-available/000-default.conf && echo "DocumentRoot /var/www/html" >> /etc/apache2/sites-available/000-default.conf && echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
 
 # Habilitamos mod_rewrite
 RUN a2enmod rewrite
+
+# Habilitamos los headers del servidor
+RUN a2enmod headers
 
 # Exponemos los puertos
 EXPOSE 80

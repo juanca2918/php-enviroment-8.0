@@ -14,7 +14,11 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_USER: root
+<<<<<<< HEAD
       POSTGRES_PASSWORD: changeme
+=======
+      POSTGRES_PASSWORD: juan1035
+>>>>>>> 79b06e6 (Elimine repo scc-seypre)
     ports:
       - 5432:5432
     networks:
