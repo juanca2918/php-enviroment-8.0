@@ -1,4 +1,3 @@
-# generame un docker compose igual y agregale mejoras
 version: '3.8'
 
 services:
@@ -13,12 +12,8 @@ services:
   serverdb:
     image: postgres:latest
     environment:
-      POSTGRES_USER: root
-<<<<<<< HEAD
+      POSTGRES_USER: changeme
       POSTGRES_PASSWORD: changeme
-=======
-      POSTGRES_PASSWORD: juan1035
->>>>>>> 79b06e6 (Elimine repo scc-seypre)
     ports:
       - 5432:5432
     networks:
@@ -39,7 +34,7 @@ services:
     image: dpage/pgadmin4:latest
     environment:
       - PGADMIN_DEFAULT_EMAIL=changeme@mail.com
-      - PGADMIN_DEFAULT_PASSWORD=root
+      - PGADMIN_DEFAULT_PASSWORD=changeme
     ports:
       - 8080:80
     networks:

@@ -27,14 +27,14 @@ RUN apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd &
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "export VISIBLE=now" >> /etc/profile
 
-# Configuramos apache2 para que apunte a la carpeta public del proyecto
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && echo "<VirtualHost *:80>" >> /etc/apache2/sites-available/000-default.conf && echo "DocumentRoot /var/www/html" >> /etc/apache2/sites-available/000-default.conf && echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
-
 # Habilitamos mod_rewrite
 RUN a2enmod rewrite
 
 # Habilitamos los headers del servidor
 RUN a2enmod headers
+
+# Configuramos apache2 para que apunte a la carpeta public del proyecto
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && echo "<VirtualHost *:80>" >> /etc/apache2/sites-available/000-default.conf && echo "DocumentRoot /var/www/html" >> /etc/apache2/sites-available/000-default.conf && echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
 
 # Exponemos los puertos
 EXPOSE 80
