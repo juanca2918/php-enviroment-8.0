@@ -18,7 +18,7 @@ Imagen del cliente administrador de base de datos
 ---
 
 ### Cambiar la informacion del dockerfile
-- **Cambiar del dockerfile la todos los argumentos con changeme** 
+- **Cambiar del dockerfile todos los argumentos con changeme** 
 ---
 
 ### Comandos para el deploy
