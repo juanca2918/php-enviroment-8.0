@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y apache2 software-properties-common && \
     curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 RUN apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && \
-    echo 'devjackal:juan1035' | chpasswd && \
-    useradd -m -d /home/dev -s /bin/bash devjackal && \
-    sudo echo 'devjackal:juan1035' | chpasswd && \
+    echo 'root:changeme' | chpasswd && \
+    useradd -m -d /home/dev -s /bin/bash changeme && \
+    sudo echo 'root:changeme' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "export VISIBLE=now" >> /etc/profile

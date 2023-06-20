@@ -17,6 +17,10 @@ Imagen de redis
 Imagen del cliente administrador de base de datos
 ---
 
+### Cambiar la informacion del dockerfile
+- **Cambiar del dockerfile la todos los argumentos con changeme** 
+---
+
 ### Comandos para el deploy
 - **docker compose build**
 Para construir la imagen del Dockerfile
