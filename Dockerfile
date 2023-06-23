@@ -1,6 +1,3 @@
-# autogenerame el Dockerfile con ubuntu, apache2, php8.0, software properties 
-# ppa:ondrej/php
-
 FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,6 +9,9 @@ ENV TZ=America/Bogota
 
 # Instalamos apache2, php8.0, software properties ppa:ondrej/php, curl, composer, git, nodejs, npm, yarn
 RUN apt-get update && apt-get install -y apache2 software-properties-common && \
+    apt-get update && apt-get install -y nano && \
+    apt-get update && apt-get install -y redis-tools && \
+    apt-get update && apt-get install -y postgresql-client && \
     add-apt-repository -y ppa:ondrej/php && apt-get update && \
     apt-get install -y php8.0 php8.0-mysql php8.0-curl php8.0-gd php8.0-intl php8.0-mbstring php8.0-soap \
     php8.0-xml php8.0-xmlrpc php8.0-zip && apt-get update && apt-get install -y curl && \
@@ -19,10 +19,8 @@ RUN apt-get update && apt-get install -y apache2 software-properties-common && \
     apt-get update && apt-get install -y git && \
     curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
-RUN apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && \
-    echo 'root:changeme' | chpasswd && \
-    useradd -m -d /home/dev -s /bin/bash changeme && \
-    sudo echo 'root:changeme' | chpasswd && \
+RUN apt-get update && apt-get install -y            openssh-server && mkdir /var/run/sshd && \
+    echo 'root:tostadora' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "export VISIBLE=now" >> /etc/profile
@@ -40,4 +38,4 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && echo "<VirtualHo
 EXPOSE 80
 
 # Iniciamos apache2
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2ctl", "-D", "FOREGROUND","&&","/usr/sbin/sshd", "-D"]

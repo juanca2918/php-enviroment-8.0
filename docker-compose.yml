@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - 8090:80
+      - 2222:22
     networks:
       - connwebserver
     volumes:
@@ -12,8 +13,8 @@ services:
   serverdb:
     image: postgres:latest
     environment:
-      POSTGRES_USER: changeme
-      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1035Botero
     ports:
       - 5432:5432
     networks:
@@ -33,8 +34,8 @@ services:
   clientedb:
     image: dpage/pgadmin4:latest
     environment:
-      - PGADMIN_DEFAULT_EMAIL=changeme@mail.com
-      - PGADMIN_DEFAULT_PASSWORD=changeme
+      - PGADMIN_DEFAULT_EMAIL=jacal2211@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=1035Botero
     ports:
       - 8080:80
     networks:
